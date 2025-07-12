@@ -1,0 +1,32 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "sv: prompt, sim, gtkwave",
+      "type": "shell",
+      "command": "bash",
+      "options": {
+        // ⬇️ Run task in folder of active file
+        "cwd": "${fileDirname}"
+      },
+      "args": [
+        "-c",
+        // ⬇️ Compile using prompt input, simulate, open GTKWave
+        "iverilog -g2012 -o sim.out ${input:sourceFiles} && vvp sim.out && gtkwave waveform.vcd"
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": []
+    }
+  ],
+  "inputs": [
+    {
+      "id": "sourceFiles",
+      "type": "promptString",
+      "description": "Enter space-separated SystemVerilog file(s) to compile",
+      "default": "*.sv"
+    }
+  ]
+}
